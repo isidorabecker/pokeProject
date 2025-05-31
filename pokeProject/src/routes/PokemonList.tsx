@@ -67,7 +67,12 @@ export const PokemonsList = () => {
               <h3 className="mt-2 text-lg font-semibold capitalize">
                 {pokemon.name}
               </h3>
-              <button onClick={() => handleFavorite(pokemon)}>Agregar a Favoritos</button>
+              <button
+                onClick={() => handleFavorite(pokemon)}
+                className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                >
+                {favorites.includes(pokemon) ? 'Remover de Favoritos' : 'Agregar a Favoritos'}
+              </button>
             </div>
           </button>
         ))}
