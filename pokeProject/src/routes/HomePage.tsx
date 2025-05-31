@@ -8,13 +8,11 @@ export const HomePage: React.FC = () => {
   }
 
   return (
-    <section className="h-[500px] flex justify-center px-10">
-      <article className="mx-4 mb-4 flex flex-row justify-center">
-        <div className="justify-center items-center flex-col h-full w-full">
-          <h1> PokeWeb </h1>
-          <button onClick={ () => handleNextPage() }>START</button>
-        </div>
-      </article>
+    <section className="h-full flex flex-col justify-start px-10 overflow-y-auto">
+      <div className="mt-40 flex flex-col justify-center items-center font-semibold text-4xl mb-4">
+        <span className="mb-8 text-center text-4xl font-extrabold text-red-600"> PokeWeb </span>
+        <button className="bg-red-600 border-radious items-center rounded-lg w-96 h-10 text-white font-semibold" onClick={ () => handleNextPage() }>START</button>
+      </div>
     </section>
   )
 }
