@@ -8,7 +8,7 @@ import './index.css'
 createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <HelmetProvider>
-      <div className="h-screen w-screen flex-col items-center">
+      <div className="h-screen w-screen flex-col items-center bg-yellow-100">
         <ApplicationRouter />
       </div>
       <ToastContainer />
