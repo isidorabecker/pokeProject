@@ -2,7 +2,7 @@ import { useQuery, type  UseQueryResult } from '@tanstack/react-query';
 
 const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-interface Pokemon {
+export interface Pokemon {
   name: string
   imageUrl: string
 }
