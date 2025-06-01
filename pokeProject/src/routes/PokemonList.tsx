@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useGetPokemonDetails, type Pokemon } from '../requests'
 import { ClassicCard } from '../shared/ClassicCard'
 import { Loader } from '../shared/Loader'
+import goBack  from '../assets/go-back-svgrepo-com.svg'
+import { Link } from 'react-router-dom'
 
 export const PokemonsList: React.FC = () => {
   const [page, setPage] = useState(1)
@@ -60,15 +62,20 @@ export const PokemonsList: React.FC = () => {
           <span className="mb-8 text-center text-4xl font-extrabold text-red-600">Pokemon List</span>
         </div>
         <div className="flex justify-between mb-3">
-          <input
-            type="text"
-            placeholder="Buscar Pokémon..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
-          />
+          <div className="flex flex-col">
+            <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900">
+              <img src={goBack} alt="Go Back" className="w-7 h-7 ml-3" />
+            </Link>
+            <input
+              type="text"
+              placeholder="Buscar Pokémon..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
+            />
+          </div>
           <button
-            className="bg-red-600 items-center rounded-lg w-96 h-10 text-white font-semibold hover:bg-red-700"
+            className="mt-8 bg-red-600 items-center rounded-lg w-96 h-10 text-white font-semibold hover:bg-red-700"
             onClick={handleShowFavorites}
           >
             {buttonLabel}
@@ -93,8 +100,8 @@ export const PokemonsList: React.FC = () => {
             >
               Anterior
             </button>
-            <span className="self-center">
-              Page {page} of {totalPages}
+            <span className="self-center text-black">
+              Página {page} de {totalPages}
             </span>
             <button
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:bg-gray-400"
