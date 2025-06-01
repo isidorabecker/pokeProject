@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useGetPokemonDetails, type Pokemon } from '../requests'
 import { ClassicCard } from '../shared/ClassicCard'
+import { Loader } from '../shared/Loader'
 
-export const PokemonsList = () => {
+export const PokemonsList: React.FC = () => {
   const [page, setPage] = useState(1)
   const { data: pokemonDetails, isLoading } = useGetPokemonDetails(page)
   const [buttonLabel, setButtonLabel] = useState('Ver Favoritos')
@@ -42,7 +43,7 @@ export const PokemonsList = () => {
   }
 
   if (isLoading || !pokemonDetails) {
-    return <div className="flex justify-center items-center h-[500px]">Loading...</div>
+    return <Loader />
   }
 
   const { pokemons, totalCount } = pokemonDetails
