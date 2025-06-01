@@ -8,10 +8,11 @@ interface CardProps {
   handleFavorite: (pokemon: Pokemon) => void
 }
 
-export const ClassicCard: React.FC<CardProps> = ({pokemon, favorites, handleFavorite}: CardProps) => {
+export const ClassicCard: React.FC<CardProps> = ({ pokemon, favorites, handleFavorite }) => {
   return (
     <Link to={`/pokemons/${pokemon.id}`}>
       <div
+        onClick={(event) => event.stopPropagation()}
         className="flex flex-col items-center p-4 border-2 border-black rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow"
       >
         <img
@@ -23,10 +24,14 @@ export const ClassicCard: React.FC<CardProps> = ({pokemon, favorites, handleFavo
           #{pokemon.id} {pokemon.name}
         </h3>
         <button
-          onClick={() => handleFavorite(pokemon)}
-          className="flex mt-2 px-4 py-2 bg-red-600 text-white font-semibold w-full rounded-lg hover:bg-red-600"
-          >
-          {favorites.includes(pokemon) ? 'Remover de Favoritos' : 'Agregar a Favoritos'}
+          onClick={(event) => {
+            event.stopPropagation()
+            event.preventDefault()
+            handleFavorite(pokemon)
+          }}
+          className="flex mt-2 px-4 py-2 bg-red-600 text-white font-semibold w-full rounded-lg hover:bg-red-700"
+        >
+          {favorites.some((fav) => fav.id === pokemon.id) ? 'Remover de Favoritos' : 'Agregar a Favoritos'}
         </button>
       </div>
     </Link>
