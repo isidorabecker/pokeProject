@@ -5,6 +5,7 @@ import {
   QueryClientProvider as ReactQueryClientProvider
 } from '@tanstack/react-query'
 import { Outlet, useNavigate } from 'react-router-dom'
+
 export const QueryClientProvider: React.FC = () => {
   const navigate = useNavigate()
 
