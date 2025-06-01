@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import type { Pokemon } from '../requests'
 
 interface CardProps {
@@ -9,7 +10,7 @@ interface CardProps {
 
 export const ClassicCard: React.FC<CardProps> = ({pokemon, favorites, handleFavorite}: CardProps) => {
   return (
-    <button onClick={() => console.log(pokemon.name)}>
+    <Link to={`/pokemons/${pokemon.id}`}>
       <div
         className="flex flex-col items-center p-4 border-2 border-black rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow"
       >
@@ -19,7 +20,7 @@ export const ClassicCard: React.FC<CardProps> = ({pokemon, favorites, handleFavo
           className="w-24 h-24 object-contain"
         />
         <h3 className="mt-2 text-lg text-black font-semibold capitalize">
-          {pokemon.name}
+          #{pokemon.id} {pokemon.name}
         </h3>
         <button
           onClick={() => handleFavorite(pokemon)}
@@ -28,6 +29,6 @@ export const ClassicCard: React.FC<CardProps> = ({pokemon, favorites, handleFavo
           {favorites.includes(pokemon) ? 'Remover de Favoritos' : 'Agregar a Favoritos'}
         </button>
       </div>
-    </button>
+    </Link>
   )
 }
