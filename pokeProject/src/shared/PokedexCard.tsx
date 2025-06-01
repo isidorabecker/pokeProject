@@ -8,7 +8,7 @@ export interface PokedexCardProps {
   height: number
   weight: number
   imageUrl: string
-  description: string
+  description: string | undefined
 }
 
 export const PokedexCard: React.FC<PokedexCardProps> = ({
