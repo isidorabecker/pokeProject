@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useGetPokemonDetails, type Pokemon } from '../requests'
+import { ClassicCard } from '../shared/ClassicCard'
 
 export const PokemonsList = () => {
   const { data: pokemonDetails, isLoading } = useGetPokemonDetails()
@@ -48,7 +49,7 @@ export const PokemonsList = () => {
             placeholder="Search Pokémon..."
             value={searchTerm}
             onChange={handleSearch}
-            className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+            className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
           />
           <button className="bg-red-600 border-radious items-center rounded-lg w-96 h-10 text-white font-semibold" onClick={() => handleShowFavorites()}>
             {buttonLabel}
@@ -56,26 +57,7 @@ export const PokemonsList = () => {
         </div>
         <article className="mb-4 grid grid-cols-3 gap-4">
           {displayedPokemons.map((pokemon, index) => (
-            <button onClick={() => console.log(pokemon.name)} key={index}>
-              <div
-                className="flex flex-col items-center p-4 border-2 border-black rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow"
-              >
-                <img
-                  src={pokemon.imageUrl}
-                  alt={pokemon.name}
-                  className="w-24 h-24 object-contain"
-                />
-                <h3 className="mt-2 text-lg font-semibold capitalize">
-                  {pokemon.name}
-                </h3>
-                <button
-                  onClick={() => handleFavorite(pokemon)}
-                  className="flex mt-2 px-4 py-2 bg-red-600 text-white font-semibold w-full rounded-lg hover:bg-red-600"
-                  >
-                  {favorites.includes(pokemon) ? 'Remover de Favoritos' : 'Agregar a Favoritos'}
-                </button>
-              </div>
-            </button>
+            <ClassicCard pokemon={pokemon} favorites={favorites} handleFavorite={handleFavorite} />
           ))}
         </article>
       </div>
