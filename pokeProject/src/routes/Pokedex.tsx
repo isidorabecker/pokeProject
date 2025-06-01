@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PokedexCard } from '../shared/PokedexCard'
 import { useGetPokemonInfo, useGetPokemonDescription } from '../requests'
+import { Loader } from '../shared/Loader'
 
 export const Pokedex: React.FC = () => {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ export const Pokedex: React.FC = () => {
   const { data: pokemonDescription, isLoading: loadingDescription } = useGetPokemonDescription(pokemonId as string)
 
   if (loadingData || loadingDescription) {
-    return <div className="flex justify-center items-center h-full">Loading...</div>
+    return <Loader />
   }
   const { id, name, types, weight, height, sprites } = pokedexData
 
