@@ -51,13 +51,21 @@ export const PokemonsList = () => {
             onChange={handleSearch}
             className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
           />
-          <button className="bg-red-600 border-radious items-center rounded-lg w-96 h-10 text-white font-semibold" onClick={() => handleShowFavorites()}>
+          <button
+            className="bg-red-600 border-radious items-center rounded-lg w-96 h-10 text-white font-semibold"
+            onClick={() => handleShowFavorites()}
+          >
             {buttonLabel}
           </button>
         </div>
         <article className="mb-4 grid grid-cols-3 gap-4">
           {displayedPokemons.map((pokemon, index) => (
-            <ClassicCard pokemon={pokemon} favorites={favorites} handleFavorite={handleFavorite} />
+            <ClassicCard
+              pokemon={pokemon}
+              favorites={favorites}
+              handleFavorite={handleFavorite}
+              key={index}
+            />
           ))}
         </article>
       </div>
