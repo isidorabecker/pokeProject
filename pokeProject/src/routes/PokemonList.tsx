@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useGetPokemonDetails, type Pokemon } from '../requests'
 import { ClassicCard } from '../shared/ClassicCard'
 
@@ -6,13 +6,20 @@ export const PokemonsList = () => {
   const { data: pokemonDetails, isLoading } = useGetPokemonDetails()
   const [buttonLabel, setButtonLabel] = useState('Ver Favoritos')
   const [showFavorites, setShowFavorites] = useState(false)
-  const [favorites, setFavorites] = useState<Pokemon[]>([])
+  const [favorites, setFavorites] = useState<Pokemon[]>(() => {
+    const savedFavorites = localStorage.getItem('favorites')
+    return savedFavorites ? JSON.parse(savedFavorites) : []
+  })
   const [searchTerm, setSearchTerm] = useState('')
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites))
+  }, [favorites])
 
   const handleFavorite = (pokemonSelected: Pokemon) => {
     setFavorites((prevFavorites) => {
-      if (prevFavorites.includes(pokemonSelected)) {
-        return prevFavorites.filter((selected) => selected !== pokemonSelected)
+      if (prevFavorites.some((fav) => fav.id === pokemonSelected.id)) {
+        return prevFavorites.filter((selected) => selected.id !== pokemonSelected.id)
       } else {
         return [...prevFavorites, pokemonSelected]
       }
@@ -33,7 +40,7 @@ export const PokemonsList = () => {
   }
 
   const filteredPokemons = showFavorites ? favorites : pokemonDetails
-  const displayedPokemons = filteredPokemons.filter(pokemon =>
+  const displayedPokemons = filteredPokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -52,19 +59,19 @@ export const PokemonsList = () => {
             className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
           />
           <button
-            className="bg-red-600 border-radious items-center rounded-lg w-96 h-10 text-white font-semibold"
-            onClick={() => handleShowFavorites()}
+            className="bg-red-600 items-center rounded-lg w-96 h-10 text-white font-semibold hover:bg-red-700"
+            onClick={handleShowFavorites}
           >
             {buttonLabel}
           </button>
         </div>
         <article className="mb-4 grid grid-cols-3 gap-4">
-          {displayedPokemons.map((pokemon, index) => (
+          {displayedPokemons.map((pokemon) => (
             <ClassicCard
               pokemon={pokemon}
               favorites={favorites}
               handleFavorite={handleFavorite}
-              key={index}
+              key={pokemon.id}
             />
           ))}
         </article>
