@@ -3,6 +3,7 @@ import { useQuery, type  UseQueryResult } from '@tanstack/react-query';
 const pokeApiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
 export interface Pokemon {
+  id: number
   name: string
   imageUrl: string
 }
@@ -26,6 +27,7 @@ export const useGetPokemonDetails = (): UseQueryResult<Pokemon[], Error> => {
       }
       const details = await detailResponse.json()
       return {
+        id: details.id,
         name: pokemon.name,
         imageUrl: details.sprites.front_default,
       }
@@ -37,5 +39,21 @@ export const useGetPokemonDetails = (): UseQueryResult<Pokemon[], Error> => {
   return useQuery({
     queryKey: ['pokemonDetails'],
     queryFn: getPokemonDetails,
+  })
+}
+
+export const useGetPokemonInfo = (id: string): UseQueryResult<any, Error> => {
+  async function getPokemonInfo(): Promise<Pokemon> {
+    const response = await fetch(`${pokeApiUrl}/${id}`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    return await response.json()
+  }
+
+  return useQuery({
+    queryKey: ['pokemonInfo', id],
+    queryFn: async () => await getPokemonInfo()
   })
 }
