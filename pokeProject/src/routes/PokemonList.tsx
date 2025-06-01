@@ -62,7 +62,7 @@ export const PokemonsList: React.FC = () => {
         <div className="flex justify-between mb-3">
           <input
             type="text"
-            placeholder="Search Pokémon..."
+            placeholder="Buscar Pokémon..."
             value={searchTerm}
             onChange={handleSearch}
             className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-gray-900"
