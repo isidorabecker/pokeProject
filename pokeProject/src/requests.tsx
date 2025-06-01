@@ -18,6 +18,22 @@ export interface PokemonDetails {
   totalCount: number
 }
 
+export const useGetPokeBallImage = (): UseQueryResult<string, Error> => {
+  async function getPokeBallImage(): Promise<string> {
+    const response = await fetch(`${pokeApiUrl}item/4/`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    return data.sprites.default
+  }
+
+  return useQuery({
+    queryKey: ['pokeBallImage'],
+    queryFn: getPokeBallImage,
+  })
+}
+
 export const useGetPokemonDetails = (page: number = 1): UseQueryResult<PokemonDetails, Error> => {
   async function getPokemonDetails(): Promise<PokemonDetails> {
     const limit = 30
