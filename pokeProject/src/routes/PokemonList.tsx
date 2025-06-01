@@ -3,7 +3,8 @@ import { useGetPokemonDetails, type Pokemon } from '../requests'
 import { ClassicCard } from '../shared/ClassicCard'
 
 export const PokemonsList = () => {
-  const { data: pokemonDetails, isLoading } = useGetPokemonDetails()
+  const [page, setPage] = useState(1)
+  const { data: pokemonDetails, isLoading } = useGetPokemonDetails(page)
   const [buttonLabel, setButtonLabel] = useState('Ver Favoritos')
   const [showFavorites, setShowFavorites] = useState(false)
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
@@ -29,17 +30,24 @@ export const PokemonsList = () => {
   const handleShowFavorites = () => {
     setShowFavorites(!showFavorites)
     setButtonLabel(showFavorites ? 'Ver Favoritos' : 'Ver Todos')
+    setPage(1)
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
   if (isLoading || !pokemonDetails) {
     return <div className="flex justify-center items-center h-[500px]">Loading...</div>
   }
 
-  const filteredPokemons = showFavorites ? favorites : pokemonDetails
+  const { pokemons, totalCount } = pokemonDetails
+  const totalPages = Math.ceil(totalCount / 30)
+  const filteredPokemons = showFavorites ? favorites : pokemons
   const displayedPokemons = filteredPokemons.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -75,6 +83,27 @@ export const PokemonsList = () => {
             />
           ))}
         </article>
+        {!showFavorites && (
+          <div className="flex justify-center gap-4 mb-4">
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:bg-gray-400"
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+            >
+              Anterior
+            </button>
+            <span className="self-center">
+              Page {page} of {totalPages}
+            </span>
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:bg-gray-400"
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === totalPages}
+            >
+              Siguiente
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )
