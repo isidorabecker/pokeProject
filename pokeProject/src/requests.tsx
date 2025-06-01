@@ -1,6 +1,6 @@
-import { useQuery, type  UseQueryResult } from '@tanstack/react-query';
+import { useQuery, type  UseQueryResult } from '@tanstack/react-query'
 
-const pokeApiUrl = 'https://pokeapi.co/api/v2/';
+const pokeApiUrl = 'https://pokeapi.co/api/v2/'
 
 export interface Pokemon {
   id: number
@@ -9,12 +9,20 @@ export interface Pokemon {
 }
 
 interface PokemonResponse {
+  count: number
   results: { name: string; url: string }[]
 }
 
-export const useGetPokemonDetails = (): UseQueryResult<Pokemon[], Error> => {
-  async function getPokemonDetails(): Promise<Pokemon[]> {
-    const response = await fetch(`${pokeApiUrl}pokemon/?limit=30`)
+export interface PokemonDetails {
+  pokemons: Pokemon[]
+  totalCount: number
+}
+
+export const useGetPokemonDetails = (page: number = 1): UseQueryResult<PokemonDetails, Error> => {
+  async function getPokemonDetails(): Promise<PokemonDetails> {
+    const limit = 30
+    const offset = (page - 1) * limit
+    const response = await fetch(`${pokeApiUrl}pokemon/?limit=${limit}&offset=${offset}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
@@ -33,11 +41,12 @@ export const useGetPokemonDetails = (): UseQueryResult<Pokemon[], Error> => {
       }
     })
 
-    return await Promise.all(promises)
+    const pokemons: Pokemon[] = await Promise.all(promises)
+    return { pokemons, totalCount: data.count }
   }
 
   return useQuery({
-    queryKey: ['pokemonDetails'],
+    queryKey: ['pokemonDetails', page],
     queryFn: getPokemonDetails,
   })
 }
