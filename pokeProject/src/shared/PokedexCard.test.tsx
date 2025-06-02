@@ -7,8 +7,8 @@ describe('PokedexCard', () => {
     id: 1,
     name: 'Bulbasaur',
     types: ['Grass', 'Poison'],
-    height: 0.7,
-    weight: 6.9,
+    height: 7,
+    weight: 69,
     imageUrl: 'https://example.com/bulbasaur.png',
     description: 'A strange seed was planted on its back at birth.'
   }
@@ -27,9 +27,9 @@ describe('PokedexCard', () => {
   it('renders pokemon height and weight correctly', () => {
     render(<PokedexCard {...mockProps} />)
     expect(screen.getByText('Altura:')).toBeInTheDocument()
-    expect(screen.getByText('0.7')).toBeInTheDocument()
+    expect(screen.getByText('0.7 m')).toBeInTheDocument()
     expect(screen.getByText('Peso:')).toBeInTheDocument()
-    expect(screen.getByText('6.9')).toBeInTheDocument()
+    expect(screen.getByText('6.9 kg')).toBeInTheDocument()
   })
 
   it('renders pokemon image with correct src and alt', () => {
