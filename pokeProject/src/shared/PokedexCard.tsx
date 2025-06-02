@@ -48,11 +48,11 @@ export const PokedexCard: React.FC<PokedexCardProps> = ({
           </div>
           <div className="mt-2">
             <span className="text-black text-lg font-semibold">Altura: </span>
-            <span className="text-black text-lg">{height}</span>
+            <span className="text-black text-lg">{height/10} m</span>
           </div>
           <div className="mt-2">
             <span className="text-black text-lg font-semibold">Peso: </span>
-            <span className="text-black text-lg">{weight}</span>
+            <span className="text-black text-lg">{weight/10} kg</span>
           </div>
         </div>
       </div>
