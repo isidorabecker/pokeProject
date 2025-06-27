@@ -1,13 +1,13 @@
-## Poke Project
+# Poke Project
 Overview
 This project is a React application built with TypeScript and Vitest. It consumes the PokéAPI to create a Pokémon browsing experience with three main screens: a Landing Page, a PokeGrid, and a Pokedex. The application emphasizes responsive design, clean code practices, and unit testing, meeting all challenge requirements.
 
- # To run the project:
+ ## To run the project:
 ```bash
   npm run dev
 ```
 
-# Features
+## Features
 
 Landing Page: An engaging entry point with a "START" button to navigate to the PokeGrid. Includes CSS styling using Tailwind CSS to showcase frontend skills.
 PokeGrid: A responsive 3-column grid displaying Pokémon cards with names and sprites. Features include:
